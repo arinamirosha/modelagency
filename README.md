@@ -25,7 +25,7 @@ b. agency by name, country or city,<br>
 c. contracts by contract date,<br>
 d. work by date of work;
 
-5) depending on the date of the contract or work, there are relevant notes:
+5) depending on the date of the contract or work, there are relevant notes:<br>
 a. the model's contract with the agency is "valid", "expired" or "absent",<br>
 b. overseas contract in "progress", "planned" or "completed",<br>
 c. work "today", "planned" or "completed";
