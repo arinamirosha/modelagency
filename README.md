@@ -1,4 +1,4 @@
-First attempt to learn Node.js + Express. The database has been prepared in advance. Interfacing with string queries (not ORM). Handlebars templates are used. No frameworks. Russian UI.
+First attempt to learn Node.js + Express completely from scratch. The database has been prepared in advance. Interfacing with string queries (not ORM). Handlebars templates are used. No frameworks. Russian UI.
 
 The "Model Agency" web application allows you to manage data on models, agencies, contracts, jobs and receive profit reports.
 
