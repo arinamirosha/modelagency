@@ -4,8 +4,7 @@ exports.MENU = `<li><a href='/models'>МОДЕЛИ</a></li>
 <li><a href='/jobs'>РАБОТЫ</a></li>
 <li><a href='/income'>ОТЧЕТЫ</a></li>`;
 exports.AGENCY = "SUCCESS&nbsp;&nbsp;&nbsp;model&nbsp;&nbsp;management";
-// exports.CONNECTION = "postgres://postgres:user@localhost:5432/modelagency";
-exports.CONNECTION = "postgres://user@modelagency:us!1998er@modelagency.postgres.database.azure.com:5432/postgres?ssl=1";
+exports.CONNECTION = "postgres://postgres:user@localhost:5432/modelagency";
 
 exports.USER_LOGIN= "user";
 exports.USER_PASSWORD= "psw";
