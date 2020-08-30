@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/header.css">
+    <link type="text/css" rel="stylesheet" href="/css/insert.css">
+    <title>{{#if_eq act 'update'}}Изменение{{else}}Добавление{{/if_eq}}</title>
+    <script src="/js/javascript.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+<body onload="setMenu('models')">
+    <div id="header">
+    <div id="header_name"><a href="/main">{{{agency_name}}}</a></div>
+    <ul id='menu'>{{{mainmenu}}}</ul>
+    </div>
+    <div id="page_content">
+        <form method="POST" action={{#if_eq act 'update'}}"/update?table_name=models&act=update"{{else}}"/insert?table_name=models"{{/if_eq}} 
+            onSubmit="return confirm('Подтвердите {{#if_eq act 'update'}}изменение{{else}}добавление{{/if_eq}}');" 
+            enctype="multipart/form-data">
+            
+            <input name="id" class="hidden" value={{id}}>
+            <table>
+                <tr>
+                    <td>Изображение{{#if_eq act 'update'}}(новое){{/if_eq}}:</td>
+                    <td><input type="file" class="noneborder" name="image" accept="image/*"></td>
+                    {{#if_eq act 'update'}}<td>Удалить<input type="checkbox" name="delimg"></td>{{/if_eq}} 
+                </tr>
+                <tr>
+                    <td>Фамилия<span class="red">*</span>:</td>
+                    <td><input name="surname" maxlength="50" required class="str" value={{surname}}></div></td>
+                </tr>
+                <tr>
+                    <td>Имя<span class="red">*</span>:</td>
+                    <td><input name="name" maxlength="50" required class="str"value={{name}}></div></td>
+                </tr>
+                <tr>
+                    <td>Отчество<span class="red">*</span>:</td>
+                    <td><input name="patronymic" maxlength="50" required class="str" value={{patronymic}}></div></td>
+                </tr>
+                <tr>
+                    <td>Модельное имя:</td>
+                    <td><input name="model_name" maxlength="30" class="str" value={{model_name}}></td>
+                </tr>
+                <tr>
+                    <td>Дата рождения:</td>
+                    <td><input type="date" name="birth" class="input_short" max={{dateFormat today 'YYYY-MM-DD'}} value={{birth}}></td>
+                </tr>
+                <tr>
+                    <td>Пол<span class="red">*</span>:</td>
+                    <td><input name="gender" type="radio" value="true" required {{#if_eq gender 'true'}}checked{{/if_eq}}>Женский
+                    <input name="gender" type="radio" value="false" required {{#if_eq gender 'false'}}checked{{/if_eq}}>Мужской</td>
+                </tr>
+                <tr>
+                    <td>Рост(см)<span class="red">*</span>:</td>
+                    <td><input name="height" type="number" min="0" class="number" required value={{height}}></td>
+                </tr>
+                <tr>
+                    <td>Параметры(ОГ-ОТ-ОБ,см)<span class="red">*</span>:</td>
+                    <td><input name="bust" type="number" min="0" class="number" required value={{bust}}> -
+                    <input name="waist" type="number" min="0" class="number" required value={{waist}}> -
+                    <input name="hips" type="number" min="0" class="number" required value={{hips}}></td>
+                </tr>
+                <tr>
+                    <td>Размер ноги:</td>
+                    <td><input name="shoes" type="number" min="0" class="number" value={{shoes}}></td>
+                </tr>
+                <tr>
+                    <td>Начало контракта:</td>
+                    <td><input type="date" name="contract_start" class="input_short" id="contract_start" value={{contract_start}}>
+                    <input type="date" id="today" class="hidden" value={{dateFormat today 'YYYY-MM-DD'}}>
+                    <button onclick="setNowStart(); return false">Текущая</button></td>
+                </tr>
+                <tr>
+                    <td>Срок(лет): </td>
+                    <td><input type="number" min="0" max="10" id="yrs" class="number">
+                    <button onclick="calcEnd(); return false">Рассчитать</button></td>
+                </tr>
+                <tr>
+                    <td>Конец контракта:</td>
+                    <td><input type="date" name="contract_end" class="input_short" id="contract_end" value={{contract_end}}></td>
+                </tr>
+                <tr>
+                    <td>Контакты:</td>
+                    <td><textarea name="contacts" rows="3" maxlength="150" class="str">{{contacts}}</textarea></td>
+                </tr>
+                <tr>
+                    <td><input type="reset" class="hover" value="{{#if_eq act 'update'}}Вернуть{{else}}Очистить{{/if_eq}}"></td>
+                    <td><button>{{#if_eq act 'update'}}Изменить{{else}}Добавить{{/if_eq}}</button></td>
+                </tr>
+            </table>
+        </form>
+        <br><span class="red">*</span> - обязательно для заполнения
+    </div>
+</body>
+</html>

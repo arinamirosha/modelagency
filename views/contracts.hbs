@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/header.css">
+    <link type="text/css" rel="stylesheet" href="/css/dbData.css">
+    <title>Контракты</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="/js/javascript.js"></script>
+</head>
+<body onload="setMenu('contracts'); statusForeignContract()">
+    <div id="header">
+        <div id="header_name"><a href="/main">{{{agency_name}}}</a></div>
+        <ul id='menu'>{{{mainmenu}}}</ul>
+    </div>
+    <div id="page_content">
+
+        <div id="filters">ФИЛЬТРЫ<br><br>
+            <form>
+                <table class="filters">
+                    <tr><td colspan="2" class="bold">Страны</td></tr>
+                    {{#if countries}}
+                    {{#each countries}}
+                    <tr><td class="left">{{country}}</td><td><input name="country[]" type="checkbox" value="{{country}}"></td></tr>
+                    {{/each}}
+                    {{/if}}
+                    <tr><td colspan="2">&nbsp;</td></tr>
+                    <tr><td colspan="2" class="bold">Контракт</td></tr>
+                    <tr>
+                        <td class="left">С гарантией</td>
+                        <td><input name="guarantee" type="checkbox" {{#if guarantee}}checked{{/if}}></td>
+                    </tr>
+                    <tr>
+                        <td class="left">С прибылью</td>
+                        <td><input name="paid" type="checkbox" {{#if paid}}checked{{/if}}></td>
+                    </tr>
+                    <tr><td colspan="2">&nbsp;</td></tr>
+                    <tr>
+                        <td class="left">В работе</td>
+                        <td><input name="cont" type="radio" value="active" {{#if_eq cont 'active'}}checked{{/if_eq}}></td>
+                    </tr>
+                    <tr>
+                        <td class="left">Завершен</td>
+                        <td><input name="cont" type="radio" value="contractend"{{#if_eq cont 'contractend'}}checked{{/if_eq}}></td>
+                    </tr>
+                    <tr>
+                        <td class="left">Запланирован</td>
+                        <td><input name="cont" type="radio" value="coming"{{#if_eq cont 'coming'}}checked{{/if_eq}}></td>
+                    </tr>
+                    <tr>
+                        <td class="left">Все</td>
+                        <td><input name="cont" type="radio" value="all" {{#if_eq cont 'all'}}checked{{/if_eq}}></td>
+                    </tr>
+                    <tr><td colspan="3">&nbsp;</td></tr>
+                    <tr><td colspan="3"><button class="hover">Применить</button></td></tr>
+                    <tr><td colspan="3">&nbsp;</td></tr>
+                    {{#if length}}<tr><td colspan="3">Найдено: {{length}}</td></tr>{{/if}}
+                </table>
+        </div>
+
+        <div id="content">
+            <div id="search">
+                    <input type="text", placeholder="Введите ФИО или название агентства", id="search_block", name="search", value={{search}}>
+                    <button class="hover">Поиск</button>
+            </form>
+                    <span id="menu2">
+                    <li> <a href="/contracts">Показать все</a> </li>
+                    <li> <a href="/insert?table_name=contracts">Добавить контракт</a> </li>
+                    </span>
+            </div>
+            <div id="result">
+                {{#if contracts}}
+                {{#each contracts}}
+                <div class="object">
+                    <table class="objects">
+                        <tr>
+                            <td rowspan="4" class="img">
+                                <figure><img src={{#if image}}"/uploads/{{image}}"{{else}}"avatar.png"{{/if}}/></figure>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="bold">{{surname}} {{name_model}} {{patronymic}}</td>
+                            <td>{{model_name}}</td>
+                            <td class="btn">
+                                <form action="/delete" onSubmit="return confirm('Вы действительно хотите удалить?');">
+                                    <input class="hidden" name="id" value="{{id}}">
+                                    <input class="hidden" name="table_name" value="contracts">
+                                    <button class="act" title="Удалить"><img src="del.png" class="imgBtn"></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr><td title="агентство">{{name_agency}}</td>
+                            <td>{{country}}, {{city}}</td>
+                            <td title="гарантия"><span class="guar">{{guarantee}}</span></td>
+                            <td title="прибыль">{{#if income}}{{income}} руб.{{/if}}</td>
+                            <td class="btn">
+                                <form action="/update?table_name=contracts" method="POST">
+                                    <input class="hidden" name="data" value="true">
+                                    <input class="hidden" name="id" value={{id}}>
+                                    <input class="hidden" name="id_model" value={{id_model}}>
+                                    <input class="hidden" name="id_agency" value={{id_agency}}>
+                                    <input class="hidden" name="c_start" value={{dateFormat c_start "YYYY-MM-DD"}}>
+                                    <input class="hidden" name="c_end" value={{dateFormat c_end "YYYY-MM-DD"}}>
+                                    <textarea class="hidden" name="guarantee">{{guarantee}}</textarea>
+                                    <input class="hidden" name="income" value={{income}}>
+                                    <button class="act" title="Изменить"><img src="edit.png" class="imgBtn"></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Срок контракта:</td>
+                            <td colspan="2">
+                                <span class="starts">{{#if c_start}}{{dateFormat c_start "DD.MM.YYYY"}}{{/if}}</span> - 
+                                <span class="ends">{{#if c_end}}{{dateFormat c_end "DD.MM.YYYY"}}{{/if}}</span>
+                            </td>
+                            <td><span class="statuses"></span></td>
+                        </tr>
+                    </table>
+                </div>
+                {{/each}}
+                {{else}}
+                Не найдено
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/header.css">
+    <link type="text/css" rel="stylesheet" href="/css/dbData.css">
+    <title>Агентства</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="/js/javascript.js"></script>
+</head>
+<body onload="setMenu('agencies')">
+    <div id="header">
+        <div id="header_name"><a href="/main">{{{agency_name}}}</a></div>
+        <ul id='menu'>{{{mainmenu}}}</ul>
+    </div>
+    <div id="page_content">
+
+        <div id="filters">ФИЛЬТРЫ<br><br>
+            <form>
+                <table class="filters">
+                    <tr><td colspan="2" class="bold">Сортировать по </td></tr>
+                    <tr>
+                        <td colspan="2"><select name="order" class="radius">
+                            <option value="sortname" {{#if_eq order 'sortname'}}selected{{/if_eq}}>названию</option>
+                            <option value="sortcountry" {{#if_eq order 'sortcountry'}}selected{{/if_eq}}>стране</option>
+                            <option value="sortcity" {{#if_eq order 'sortcity'}}selected{{/if_eq}}>городу</option>
+                        </select></td>
+                    </tr>
+                    <tr><td colspan="2">&nbsp;</td></tr>
+                    <tr><td colspan="2" class="bold">Страны</td></tr>
+                    {{#if countries}}
+                    {{#each countries}}
+                    <tr><td class="left">{{country}}</td><td><input name="country[]" type="checkbox" value="{{country}}"></td></tr>
+                    {{/each}}
+                    {{/if}}
+                    <tr><td colspan="2">&nbsp;</td></tr>
+                    <tr><td colspan="2" class="bold">Города</td></tr>
+                    {{#if cities}}
+                    {{#each cities}}
+                    <tr><td class="left">{{city}}</td><td><input name="city[]" type="checkbox" value="{{city}}"></td></tr>
+                    {{/each}}
+                    {{/if}}
+                    <tr><td colspan="2">&nbsp;</td></tr>
+                    <tr><td colspan="2"><button class="hover">Применить</button></td></tr>
+                    <tr><td colspan="2">&nbsp;</td></tr>
+                    {{#if length}}<tr><td colspan="3">Найдено: {{length}}</td></tr>{{/if}}
+
+                </table>
+        </div>
+
+        <div id="content">
+            <div id="search">
+                    <input type="text", placeholder="Введите название", id="search_block", name="search", value={{search}}>
+                    <button class="hover">Поиск</button>
+            </form>
+                    <span id="menu2">
+                    <li> <a href="/agencies">Показать все</a> </li>
+                    <li> <a href="/insert?table_name=agencies">Добавить агентство</a> </li>
+                    </span>
+            </div>
+            <div id="result">
+                {{#if agencies}}
+                {{#each agencies}}
+                <div class="object">
+                    <table class="objects tables_agency">
+                        <tr>
+                            <td colspan="2" class="bold">{{name}}</td>
+                            <td class="btn btn_agency">
+                                <form action="/delete" onSubmit="return confirm('Вы действительно хотите удалить {{name}} {{city}}?');">
+                                    <input class="hidden" name="id" value="{{id}}">
+                                    <input class="hidden" name="table_name" value="agencies">
+                                    <button class="act" title="Удалить"><img src="del.png" class="imgBtn"></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{country}}</td><td>{{city}}</td>
+                            <td class="btn btn_agency">
+                                <form action="/update?table_name=agencies" method="POST">
+                                    <input class="hidden" name="data" value="true">
+                                    <input class="hidden" name="id" value={{id}}>
+                                    <textarea class="hidden" name="name">{{name}}</textarea>
+                                    <textarea class="hidden" name="country">{{country}}</textarea>
+                                    <textarea class="hidden" name="city">{{city}}</textarea>
+                                    <textarea class="hidden" name="contacts">{{contacts}}</textarea>
+                                    <button class="act" title="Изменить"><img src="edit.png" class="imgBtn"></button>
+                                </form>
+                            </td></tr>
+                        <tr><td colspan="2">{{contacts}}</td>
+                            <td class="btn btn_agency"><form action="/insert">
+                                <input class="hidden" name="id_agency" value="{{id}}">
+                                <input class="hidden" name="table_name" value="contracts">
+                                <button class="act">Контракт</button>
+                            </form></td>
+                        </tr>
+                    </table>
+                </div>
+                {{/each}}
+                {{else}}
+                Не найдено
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

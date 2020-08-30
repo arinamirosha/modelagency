@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/header.css">
+    <link type="text/css" rel="stylesheet" href="/css/dbData.css">
+    <title>Работы</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="/js/javascript.js"></script>
+</head>
+<body onload="setMenu('jobs'); statusJob()">
+    <div id="header">
+        <div id="header_name"><a href="/main">{{{agency_name}}}</a></div>
+        <ul id='menu'>{{{mainmenu}}}</ul>
+    </div>
+    <div id="page_content">
+
+        <div id="filters">ФИЛЬТРЫ<br><br>
+            <form>
+                <table class="filters">
+                    <tr><td colspan="2" class="bold">Работа</td></tr>
+                    <tr>
+                        <td class="left">С прибылью</td>
+                        <td><input name="paid" type="checkbox" {{#if paid}}checked{{/if}}></td>
+                    </tr>
+                    <tr><td colspan="2">&nbsp;</td></tr>
+                    <tr>
+                        <td class="left">Сегодня</td>
+                        <td><input name="cont" type="radio" value="active" {{#if_eq cont 'active'}}checked{{/if_eq}}></td>
+                    </tr>
+                    <tr>
+                        <td class="left">Завершена</td>
+                        <td><input name="cont" type="radio" value="jobend"{{#if_eq cont 'jobend'}}checked{{/if_eq}}></td>
+                    </tr>
+                    <tr>
+                        <td class="left">Запланирована</td>
+                        <td><input name="cont" type="radio" value="coming"{{#if_eq cont 'coming'}}checked{{/if_eq}}></td>
+                    </tr>
+                    <tr>
+                        <td class="left">Все</td>
+                        <td><input name="cont" type="radio" value="all" {{#if_eq cont 'all'}}checked{{/if_eq}}></td>
+                    </tr>
+                    <tr><td colspan="3">&nbsp;</td></tr>
+                    <tr><td colspan="3"><button class="hover">Применить</button></td></tr>
+                    <tr><td colspan="3">&nbsp;</td></tr>
+                    {{#if length}}<tr><td colspan="3">Найдено: {{length}}</td></tr>{{/if}}
+                </table>
+        </div>
+
+        <div id="content">
+            <div id="search">
+                    <input type="text", placeholder="Введите ФИО или название работы", id="search_block", name="search", value={{search}}>
+                    <button class="hover">Поиск</button>
+            </form>
+                    <span id="menu2">
+                    <li> <a href="/jobs">Показать все</a> </li>
+                    <li> <a href="/insert?table_name=jobs">Добавить работу</a> </li>
+                    </span>
+            </div>
+            <div id="result">
+                {{#if jobs}}
+                {{#each jobs}}
+                <div class="object">
+                    <table class="objects">
+                        <tr>
+                            <td rowspan="4" class="img">
+                                <figure><img src={{#if image}}"/uploads/{{image}}"{{else}}"avatar.png"{{/if}}/></figure>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="bold">{{name}}</td>
+                            <td colspan="2" title="адрес">{{address}}</td>
+                            <td class="btn">
+                                <form action="/delete" onSubmit="return confirm('Вы действительно хотите удалить {{name}}?');">
+                                    <input class="hidden" name="id" value="{{id}}">
+                                    <input class="hidden" name="table_name" value="jobs">
+                                    <button class="act" title="Удалить"><img src="del.png" class="imgBtn"></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{surname}} {{name_model}} {{patronymic}} {{model_name}}</td>
+                            <td title="дата"><span class="dates">{{dateFormat date "DD.MM.YYYY"}}</span></td>
+                            <td><span class="statuses"></span></td>
+                            <td class="btn">
+                                <form action="/update?table_name=jobs" method="POST">
+                                    <input class="hidden" name="data" value="true">
+                                    <input class="hidden" name="id" value={{id}}>
+                                    <textarea class="hidden" name="name">{{name}}</textarea>
+                                    <input class="hidden" name="id_model" value={{id_model}}>
+                                    <input class="hidden" name="date" value={{dateFormat date "YYYY-MM-DD"}}>
+                                    <input class="hidden" name="time" value={{time}}>
+                                    <textarea class="hidden" name="address">{{address}}</textarea>
+                                    <input class="hidden" name="total" value={{total}}>
+                                    <input class="hidden" name="income" value={{income}}>
+                                    <button class="act" title="Изменить"><img src="edit.png" class="imgBtn"></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td title="время">{{time}}</td>
+                            <td>Всего {{#if_eq total ''}}0{{else}}{{total}}{{/if_eq}} руб.</td>
+                            <td>Прибыль {{#if income}}{{income}} руб.{{/if}}</td>
+                        </tr>
+                    </table>
+                </div>
+                {{/each}}
+                {{else}}
+                Не найдено
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

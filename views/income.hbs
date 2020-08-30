@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/header.css">
+    <link type="text/css" rel="stylesheet" href="/css/income.css">
+    <title>Отчеты</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://www.google.com/jsapi"></script>
+    <script src="/js/javascript.js"></script>
+</head>
+<body onload="setMenu('income'); hide_all_in(); seperateIncome(); ">
+    <div id="header">
+        <div id="header_name"><a href="/main">{{{agency_name}}}</a></div>
+        <ul id='menu'>{{{mainmenu}}}</ul>
+    </div>
+    <div id="page_content">
+        <div id="content">
+            <div id="fl_right">
+                <table id="all_info">
+                    <tr><td>ЗА ВСЕ ВРЕМЯ</td><td class="right"><span class="in" id="all"></span> руб</td></tr>
+                    <tr><td>РАБОТЫ</td><td class="right"><span class="in" id="all_jobs"></span> руб</td></tr>
+                    <tr><td>КОНТРАКТЫ</td><td class="right"><span class="in" id="all_contracts"></span> руб</td></tr>
+                </table>
+                <div id="diagram" class="diagram"></div>
+                {{#each incomes}}
+                <input class="years hidden" value={{y}}><input class="incomes hidden" value={{sum}}>
+                {{/each}}
+                {{#each incomes_jobs}}
+                <input class="y_jobs hidden" value={{y}}><input class="incomes_jobs hidden" value={{sum}}>
+                {{/each}}
+                {{#each incomes_contracts}}
+                <input class="y_contracts hidden" value={{y}}><input class="incomes_contracts hidden" value={{sum}}>
+                {{/each}}
+            </div>
+            <div id="fl_left">
+                ОБЩАЯ ПРИБЫЛЬ<br><br>
+                <table id="table_one">
+                    <tr><th class="clr">МОДЕЛЬ/РАБОТЫ</th><td class="clr right"><button onclick="swt('table_one');">показать/скрыть</button></td></tr>
+                    {{#each top_jobs as |field index|}}
+                    <tr class="tr_all"><td>{{inc index}}. {{surname}} {{name}} {{patronymic}}</td><td class="right"><span class="in">{{sum}}</span>руб</td></tr>
+                    {{/each}}
+                </table><br>
+                <table id="table_two">
+                    <tr><th class="clr">МОДЕЛЬ/КОНТРАКТЫ</th><td class="clr right"><button onclick="swt('table_two');">показать/скрыть</button></td></tr>
+                    {{#each top_contracts as |field index|}}
+                    <tr class="tr_all"><td>{{inc index}}. {{surname}} {{name}} {{patronymic}}</td><td class="right"><span class="in">{{sum}}</span>руб</td></tr>
+                    {{/each}}
+                </table><br>
+                <table id="table_three">
+                    <tr><th class="clr">СТРАНЫ</th><td class="clr right"><button onclick="swt('table_three');">показать/скрыть</button></td></tr>
+                    {{#each top_countries as |field index|}}
+                    <tr class="tr_all"><td>{{inc index}}. {{country}}</td><td class="right"><span class="in">{{sum}}</span>руб</td></tr>
+                    {{/each}}
+                </table><br>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

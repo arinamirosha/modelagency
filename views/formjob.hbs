@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/header.css">
+    <link type="text/css" rel="stylesheet" href="/css/insert.css">
+    <title>{{#if_eq act 'update'}}Изменение{{else}}Добавление{{/if_eq}}</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="/js/javascript.js"></script>
+</head>
+<body onload="selectModel({{id_model}}); setMenu('jobs')">
+    <div id="header">
+    <div id="header_name"><a href="/main">{{{agency_name}}}</a></div>
+    <ul id='menu'>{{{mainmenu}}}</ul>
+    </div>
+    <div id="page_content">
+        <form method="POST" action={{#if_eq act 'update'}}"/update?table_name=jobs&act=update"{{else}}"/insert?table_name=jobs"{{/if_eq}} 
+            onSubmit="return confirm('Подтвердите {{#if_eq act 'update'}}изменение{{else}}добавление{{/if_eq}}');">
+            
+            <input name="id" class="hidden" value={{id}}>
+            <table>
+                <tr>
+                    <td>Название<span class="red">*</span>:</td>
+                    <td><textarea name="name" rows="3" maxlength="150" class="str" required>{{name}}</textarea></td>
+                </tr>
+                <tr>
+                    <td>Модель<span class="red">*</span>:</td>
+                    {{#if models}}<td><select name="model" id="model" class="str radius" required><option></option>{{#each models}}
+                    <option value="{{id}}">{{surname}} {{name}} {{patronymic}}, {{model_name}}</option>
+                    {{/each}}</select></td>{{/if}}
+                </tr>
+                <tr>
+                    <td>Дата<span class="red">*</span>:</td>
+                    <td><input type="date" name="date" class="input_short" required value={{date}}></td>
+                </tr>
+                <tr>
+                    <td>Время:</td>
+                    <td><input name="time" class="input_short" value={{time}}></td>
+                </tr>
+                <tr>
+                    <td>Адрес:</td>
+                    <td><textarea name="address" rows="3" maxlength="150" class="str">{{address}}</textarea></td>
+                </tr>
+                <tr>
+                    <td>Всего (руб):</td>
+                    <td><input name="total" id="total" class="input_short" type="number" min="0" value={{total}}></td>
+                    <td><button onclick="calcIncome(); return false">Рассчитать 20%</button></td>
+                </tr>
+                <tr>
+                    <td>Прибыль20%(руб):</td>
+                    <td><input name="income" id="income" class="input_short" type="number" min="0" value={{income}}></td>
+                    <td><button onclick="calcTotal(); return false">Рассчитать всего</button></td>
+                </tr>
+                <tr>
+                    <td><input type="reset" class="hover" value="{{#if_eq act 'update'}}Вернуть{{else}}Очистить{{/if_eq}}"></td>
+                    <td><button>{{#if_eq act 'update'}}Изменить{{else}}Добавить{{/if_eq}}</button></td>
+                </tr>
+            </table>
+        </form>
+        <br><span class="red">*</span> - обязательно для заполнения
+    </div>
+</body>
+</html>

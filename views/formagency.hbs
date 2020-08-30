@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/header.css">
+    <link type="text/css" rel="stylesheet" href="/css/insert.css">
+    <title>{{#if_eq act 'update'}}Изменение{{else}}Добавление{{/if_eq}}</title>
+    <script src="/js/javascript.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+<body onload="setMenu('agencies')">
+    <div id="header">
+    <div id="header_name"><a href="/main">{{{agency_name}}}</a></div>
+    <ul id='menu'>{{{mainmenu}}}</ul>
+    </div>
+    <div id="page_content">
+        <form method="POST" action={{#if_eq act 'update'}}"/update?table_name=agencies&act=update"{{else}}"/insert?table_name=agencies"{{/if_eq}} 
+            onSubmit="return confirm('Подтвердите {{#if_eq act 'update'}}изменение{{else}}добавление{{/if_eq}}');">
+            
+            <input name="id" class="hidden" value={{id}}>
+            <table>
+                <tr>
+                    <td>Название<span class="red">*</span>:</td>
+                    <td><textarea name="name" maxlength="100" class="str" required>{{name}}</textarea></td>
+                </tr>
+                <tr>
+                    <td>Страна<span class="red">*</span>:</td>
+                    <td><textarea name="country" id="country" maxlength="30" class="str" required>{{country}}</textarea></td>
+                    {{#if countries}}<td><select name="countries" class="radius" id="countries"><option></option>{{#each countries}}
+                    <option value="{{country}}">{{country}}</option>
+                    {{/each}}</select></td>{{/if}}
+                    <td><button onclick="fill('country','countries'); return false">Заполнить</button></td>
+                </tr>
+                <tr>
+                    <td>Город<span class="red">*</span>:</td>
+                    <td><textarea name="city" id="city" maxlength="30" class="str" required>{{city}}</textarea></td>
+                    {{#if cities}}<td><select name="cities" class="radius" id="cities"><option></option>{{#each cities}}
+                    <option value="{{city}}">{{city}}</option>
+                    {{/each}}</select></td>{{/if}}
+                    <td><button onclick="fill('city','cities'); return false">Заполнить</button></td>
+                </tr>
+                <tr>
+                    <td>Контакты:</td>
+                    <td><textarea name="contacts" rows="3" maxlength="150" class="str">{{contacts}}</textarea></td>
+                </tr>
+                <tr>
+                    <td><input type="reset" class="hover" value="{{#if_eq act 'update'}}Вернуть{{else}}Очистить{{/if_eq}}"></td>
+                    <td><button>{{#if_eq act 'update'}}Изменить{{else}}Добавить{{/if_eq}}</button></td>
+                </tr>
+            </table>
+        </form>
+        <br><span class="red">*</span> - обязательно для заполнения
+    </div>
+</body>
+</html>

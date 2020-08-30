@@ -1,0 +1,132 @@
+#page_content{
+    min-width: 1300px;
+}
+#menu2{
+    margin-left: 30px; 
+}
+body{
+    font-family: system-ui;
+}
+#filters{
+    float: left;
+    background-color: #FFFBBF;
+    border-radius: 5px;
+    width: 255px;
+    text-align: center;
+    margin-left: 25px;
+    padding: 10px;
+}
+#page_content{
+    margin-top: 70px;
+    width: 100%;
+}
+#content{
+    margin-right: 100px;
+    float: right;
+    width: 900px;
+}
+#search{
+    padding: 10px;
+    background-color:#FFFBBF;
+    border-radius: 5px;
+    margin-bottom: 7px;
+}
+#search_block{
+    width: 400px;
+}
+
+/* ОБЪЕКТЫ */
+.object{
+    border-bottom: 1px solid black;
+    padding: 1px;
+    font-size: 15px;
+}
+/* Аватарка */
+figure {
+    width: 70px;
+    height: 100px;
+    margin: 0;
+    overflow: hidden;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+figure img { 
+    width: 100%;
+    margin-top: 6px;
+    border-radius: 5px;
+}
+/* Таблица объектов */
+table.objects{
+    width: 800px;
+    text-align: center;
+    border-collapse: collapse;
+}
+.objects td{
+    width: 170px;
+    border: 1px solid #E3E3E3;
+}
+.tables_agency{
+    margin-left: 100px;
+}
+.btn_agency{
+    padding-right: 100px;
+}
+/* Кнопки объектов */
+.imgBtn{
+    width: 15px;
+    height: 15px;
+}
+td.btn{
+    width: 100px;
+    text-align: right;
+    border: none;
+}
+td.img{
+    border: none;
+}
+button.act{
+    border: none;
+    background: transparent;
+    padding: 5px;
+}
+button.act:hover{
+    background-color: #FFFBBF;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* ФИЛЬТРЫ */
+table.filters{
+    width: 255px;
+    border-collapse: collapse;
+}
+.filters td{
+    width: 85px;
+    empty-cells: show;
+}
+.sort{
+    width: 125px;
+}
+input{
+    width: 60px;
+}
+input,.radius,.hover{
+   border-radius: 5px;
+   border: 1px solid rgb(170, 170, 170);
+}
+.hover:hover{
+    background-color: white;
+    border: 1px solid black;
+}
+input:hover,.radius:hover{
+   border: 1px solid black;
+}
+
+/* СТИЛИ */
+.bold{
+    font-weight: bold;
+}
+.left{
+    text-align: left;
+}

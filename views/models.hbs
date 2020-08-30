@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/header.css">
+    <link type="text/css" rel="stylesheet" href="/css/dbData.css">
+    <title>Модели</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="/js/javascript.js"></script>
+</head>
+<body onload="setMenu('models'); statusModelContract()">
+    <div id="header">
+        <div id="header_name"><a href="/main">{{{agency_name}}}</a></div>
+        <ul id='menu'>{{{mainmenu}}}</ul>
+    </div>
+    <div id="page_content">
+
+        <div id="filters">ФИЛЬТРЫ<br><br>
+            <form>
+                <table class="filters">
+                    <tr><td colspan="3" class="bold">Сортировать по </td></tr>
+                    <tr>
+                        <td colspan="3"><select name="order" class="radius" class="sort">
+                            <option value="sortsurname" {{#if_eq order 'sortsurname'}}selected{{/if_eq}}>фамилии</option>
+                            <option value="sortname" {{#if_eq order 'sortname'}}selected{{/if_eq}}>имени</option>
+                            <option value="sortmodelname" {{#if_eq order 'sortmodelname'}}selected{{/if_eq}}>модельному имени</option>
+                            <option value="sortshort" {{#if_eq order 'sortshort'}}selected{{/if_eq}}>росту &#8593;</option>
+                            <option value="sorttall" {{#if_eq order 'sorttall'}}selected{{/if_eq}}>росту &#8595;</option>
+                            <option value="sortcontract" {{#if_eq order 'sortcontract'}}selected{{/if_eq}}>дате контрактов</option>
+                        </select></td>
+                    </tr>
+                    <tr><td colspan="3">&nbsp;</td></tr>
+                    <tr><td colspan="3" class="bold">Пол</td></tr>
+                    <tr>
+                        <td colspan="2" class="left">Женский</td>
+                        <td><input name="sex" type="radio" value="women" {{#if_eq sex 'women'}}checked{{/if_eq}}></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="left">Мужской</td>
+                        <td><input name="sex" type="radio" value="men"{{#if_eq sex 'men'}}checked{{/if_eq}}></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="left">Не имеет значения</td>
+                        <td><input name="sex" type="radio" value="all" {{#if_eq sex 'all'}}checked{{/if_eq}}></td>
+                    </tr>
+                    <tr><td colspan="3">&nbsp;</td></tr>
+                    <tr><td colspan="3" class="bold">Параметры</td></tr>
+                    <tr>
+                        <td class="left">Рост</td>
+                        <td colspan="2"><input placeholder="от" name="heightfrom" pattern="[0-9]*" maxlength="3" value={{heightfrom}}> -
+                        <input placeholder="до" name="heightto" pattern="[0-9]*" maxlength="3" value={{heightto}}></td>
+                    </tr>
+                    <tr>
+                        <td class="left">Грудь</td>
+                        <td colspan="2"><input placeholder="от" name="bustfrom" pattern="[0-9]*" maxlength="3" value={{bustfrom}}> -
+                        <input placeholder="до" name="bustto" pattern="[0-9]*" maxlength="3" value={{bustto}}></td>
+                    </tr>
+                    <tr>
+                        <td class="left">Талия</td>
+                        <td colspan="2"><input placeholder="от" name="waistfrom" pattern="[0-9]*" maxlength="3" value={{waistfrom}}> -
+                        <input placeholder="до" name="waistto" pattern="[0-9]*" maxlength="3" value={{waistto}}></td>
+                    </tr>
+                    <tr>
+                        <td class="left">Бедра</td>
+                        <td colspan="2"><input placeholder="от" name="hipsfrom" pattern="[0-9]*" maxlength="3" value={{hipsfrom}}> -
+                        <input placeholder="до" name="hipsto" pattern="[0-9]*" maxlength="3" value={{hipsto}}></td>
+                    </tr>
+                    <tr><td colspan="3">&nbsp;</td></tr>
+                    <tr><td colspan="3" class="bold">Контракт</td></tr>
+                    <tr>
+                        <td colspan="2" class="left">Действует</td>
+                        <td><input name="cont" type="radio" value="active" {{#if_eq cont 'active'}}checked{{/if_eq}}></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="left">Истек</td>
+                        <td><input name="cont" type="radio" value="contractend"{{#if_eq cont 'contractend'}}checked{{/if_eq}}></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="left">Отсутствует</td>
+                        <td><input name="cont" type="radio" value="nocontract"{{#if_eq cont 'nocontract'}}checked{{/if_eq}}></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="left">Все</td>
+                        <td><input name="cont" type="radio" value="all" {{#if_eq cont 'all'}}checked{{/if_eq}}></td>
+                    </tr>
+                    <tr><td colspan="3">&nbsp;</td></tr>
+                    <tr><td colspan="3"><button class="hover">Применить</button></td></tr>
+                    <tr><td colspan="3">&nbsp;</td></tr>
+                    {{#if length}}<tr><td colspan="3">Найдено: {{length}}</td></tr>{{/if}}
+                </table>                
+        </div>
+
+        <div id="content">
+            <div id="search">
+                    <input type="text" placeholder="Введите имя, фамилию или отчество" id="search_block" name="search" value={{search}}>
+                    <button class="hover">Поиск</button>
+            </form>
+                    <span id="menu2">
+                    <li> <a href="/models">Показать всех</a> </li>
+                    <li> <a href="/insert?table_name=models">Добавить модель</a> </li>
+                    </span>
+            </div>
+            <div id="result">
+                {{#if models}}
+                {{#each models}}
+                <div class="object">
+                    <table class="objects">
+                        <tr>
+                            <td rowspan="5" class="img">
+                                <figure><img src={{#if image}}"/uploads/{{image}}"{{else}}"avatar.png"{{/if}}/></figure>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="bold">{{surname}} {{name}} {{patronymic}}</td>
+                            <td colspan="2" class="bold">{{model_name}}</td>
+                            <td class="btn">
+                                <form action="/delete" onSubmit="return confirm('Вы действительно хотите удалить {{fio}}?');">
+                                    <input class="hidden" name="id" value="{{id}}">
+                                    <input class="hidden" name="table_name" value="models">
+                                    <button class="act" title="Удалить"><img src="del.png" class="imgBtn"></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td title="дата рождения">{{#if birth}}{{dateFormat birth "DD.MM.YYYY"}}{{/if}}</td>
+                            <td title="пол">{{#if gender}} Ж {{else}} М {{/if}}</td>
+                            <td title="рост">{{height}}</td>
+                            <td title="грудь-талия-бедра">{{bust}}-{{waist}}-{{hips}}</td>
+                            <td title="размер ноги">{{shoes}}</td>
+                            <td class="btn">
+                                <form action="/update?table_name=models" method="POST">
+                                    <input class="hidden" name="data" value="true">
+                                    <input class="hidden" name="id" value={{id}}>
+                                    <input class="hidden" name="surname" value={{surname}}>
+                                    <input class="hidden" name="name" value={{name}}>
+                                    <input class="hidden" name="patronymic" value={{patronymic}}>
+                                    <input class="hidden" name="model_name" value={{model_name}}>
+                                    <input class="hidden" name="birth" value={{dateFormat birth "YYYY-MM-DD"}}>
+                                    <input class="hidden" name="gender" value={{gender}}>
+                                    <input class="hidden" name="height" value={{height}}>
+                                    <input class="hidden" name="bust" value={{bust}}>
+                                    <input class="hidden" name="waist" value={{waist}}>
+                                    <input class="hidden" name="hips" value={{hips}}>
+                                    <input class="hidden" name="shoes" value={{shoes}}>
+                                    <input class="hidden" name="contract_start" value={{dateFormat contract_start "YYYY-MM-DD"}}>
+                                    <input class="hidden" name="contract_end" value={{dateFormat contract_end "YYYY-MM-DD"}}>
+                                    <textarea class="hidden" name="contacts">{{contacts}}</textarea>
+                                    <button class="act" title="Изменить"><img src="edit.png" class="imgBtn"></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Срок контракта:</td>
+                            <td colspan="3">
+                                <span class="starts">{{#if contract_start}}{{dateFormat contract_start "DD.MM.YYYY"}}{{/if}}</span> - 
+                                <span class="ends">{{#if contract_end}}{{dateFormat contract_end "DD.MM.YYYY"}}{{/if}}</span>
+                            </td>
+                            <td><span class="statuses"></span></td>
+                            <td class="btn">
+                                <form action="/insert">
+                                    <input class="hidden" name="id_model" value="{{id}}">
+                                    <input class="hidden" name="table_name" value="contracts">
+                                    <button class="act">Контракт</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Контакты:</td>
+                            <td colspan="4">{{contacts}}</td>
+                            <td class="btn">
+                                <form action="/insert">
+                                    <input class="hidden" name="id_model" value="{{id}}">
+                                    <input class="hidden" name="table_name" value="jobs">
+                                    <button class="act">Работа</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                {{/each}}
+                {{else}}
+                Не найдено
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

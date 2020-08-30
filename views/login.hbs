@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/login.css">
+    <link rel="icon" href="/images/icon.jpg">
+    <title>Вход</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="/js/javascript.js"></script>
+</head>
+<body onload="msgKeyUp()">
+    <div id="page_content">
+        <form action="/login" method="POST">
+            <table>
+                <tr>
+                    <td colspan="2" id="agc">{{{agency_name}}}</td>
+                </tr>
+                <tr><td></td></tr>
+                <tr>
+                    <td>Логин</td><td><input name="login" autocomplete="off" required value={{lgn}}></td>
+                </tr>
+                <tr>
+                    <td>Пароль</td><td><input type="password" required name="password" value={{psw}}></td>
+                </tr>
+                <tr><td></td></tr>
+                <tr>
+                    <td colspan="2"><button>Войти</button></td>
+                </tr>
+                <tr><td></td></tr>
+                <tr>
+                    <td colspan="2" id="msg">{{msg}}</td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
